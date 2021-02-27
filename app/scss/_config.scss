@@ -1,6 +1,5 @@
 /*! Общие стили */
 
-
 // Добавляем border-box на весь проект
 html {
   -webkit-box-sizing: border-box;
@@ -19,6 +18,15 @@ html {
 img {
   width: 100%;
   height: auto;
+}
+
+// Класс для авто дефисов при резайсе окна (не работает на движке blink)
+.text-wrap {
+  word-wrap: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
 }
 
 // Настройки body
