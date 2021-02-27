@@ -22,11 +22,11 @@ img {
 
 // Класс для авто дефисов при резайсе окна (не работает на движке blink)
 .text-wrap {
-  word-wrap: break-word;
+  word-break: break-all;
+  hyphens: auto;
   -webkit-hyphens: auto;
   -moz-hyphens: auto;
   -ms-hyphens: auto;
-  hyphens: auto;
 }
 
 // Настройки body
