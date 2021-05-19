@@ -19,6 +19,6 @@
 		"gulp-uglify-es": "^2.0.0"
 	},
 	"dependencies": {
-		"npm": "^7.6.0"
+		"npm": "^7.13.0"
 	}
 }
