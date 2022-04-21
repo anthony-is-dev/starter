@@ -1,7 +1,5 @@
-// Подключаем шрифты
-@import "fonts";
-
-// Подключаем normalize.css https://github.com/necolas/normalize.css
+// ==================================================
+// Подключаем normalize https://github.com/necolas/normalize.css
 @import "normalize";
 
 // Подключаем общие стили для всего проекта
@@ -10,4 +8,20 @@
 // Подключаем контейнер 
 @import "container";
 
-/*! Основные стили */
+// Подключаем шрифты
+@import "fonts";
+
+// Подключаем переменные
+@import "variables";
+
+// Подключаем стили для скролл бара
+@import "scrollbar";
+
+// Подключаем tooltips
+@import "tooltips";
+// ==================================================
+
+// Ваш main scss код:
+body {
+  background-color: $base-color;
+}
