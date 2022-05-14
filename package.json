@@ -10,8 +10,8 @@
   "author": "Anton Demidenko (aka introversion)",
   "license": "ISC",
   "devDependencies": {
-    "@babel/core": "^7.17.9",
-    "@babel/preset-env": "^7.16.11",
+    "@babel/core": "^7.17.10",
+    "@babel/preset-env": "^7.17.10",
     "@babel/register": "^7.17.7",
     "browser-sync": "^2.27.9",
     "del": "^6.0.0",
@@ -26,8 +26,8 @@
     "gulp-sourcemaps": "^3.0.0",
     "gulp-terser": "^2.1.0",
     "jquery": "^3.6.0",
-    "sass": "^1.50.1",
-    "webpack": "^5.72.0",
+    "sass": "^1.51.0",
+    "webpack": "^5.72.1",
     "webpack-stream": "^7.0.0"
   }
 }
