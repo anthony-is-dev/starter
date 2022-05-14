@@ -22,6 +22,9 @@ export const startServer = () => {
       baseDir: "app",
     },
   });
+  compileInclude();
+  sassToCss();
+  scriptsDev();
 };
 
 // compile include HTML
