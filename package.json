@@ -2,32 +2,34 @@
   "name": "gulp-project",
   "type": "module",
   "version": "1.0.0",
-  "description": "",
+  "description": "task runner(gulp + webpack)",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Anton Demidenko (aka introversion)",
+  "author": "Anton Demidenko (introversionya)",
   "license": "ISC",
   "devDependencies": {
-    "@babel/core": "^7.17.10",
-    "@babel/preset-env": "^7.17.10",
-    "@babel/register": "^7.17.7",
-    "browser-sync": "^2.27.9",
-    "del": "^6.0.0",
+    "@babel/core": "^7.18.10",
+    "@babel/preset-env": "^7.18.10",
+    "@babel/register": "^7.18.9",
+    "babel-loader": "^8.2.5",
+    "browser-sync": "^2.27.10",
+    "del": "^7.0.0",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^8.0.0",
-    "gulp-babel": "^8.0.0",
     "gulp-clean-css": "^4.3.0",
     "gulp-concat": "^2.6.1",
     "gulp-file-include": "^2.3.0",
+    "gulp-htmlmin": "^5.0.1",
     "gulp-imagemin": "^8.0.0",
     "gulp-sass": "^5.1.0",
     "gulp-sourcemaps": "^3.0.0",
-    "gulp-terser": "^2.1.0",
-    "jquery": "^3.6.0",
-    "sass": "^1.51.0",
-    "webpack": "^5.72.1",
+    "sass": "^1.54.3",
+    "webpack": "^5.74.0",
     "webpack-stream": "^7.0.0"
+  },
+  "dependencies": {
+    "core-js": "^3.24.1"
   }
 }

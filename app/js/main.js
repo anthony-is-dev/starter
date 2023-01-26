@@ -1,9 +1,3 @@
-// ----------------------- imports -----------------------
-import {hello} from "./components/test.js";
-// -------------------------------------------------------
-
-// main
-document.addEventListener("DOMContentLoaded", () => {  
-  hello()
-  /*! test */
-});
+// ----------------------- imports --------------------------------------
+import "core-js"; // полифилы
+import * as variable from "./components/_variables.js"; // Глобальные переменные

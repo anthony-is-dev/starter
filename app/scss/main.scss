@@ -1,27 +1,26 @@
-// ==================================================
 // Подключаем normalize https://github.com/necolas/normalize.css
-@import "normalize";
-
-// Подключаем общие стили для всего проекта
-@import "config";
-
-// Подключаем контейнер 
-@import "container";
+@import "./components/normalize";
 
 // Подключаем шрифты
-@import "fonts";
+@import "./components/fonts";
 
 // Подключаем переменные
-@import "variables";
+@import "./components/variables";
 
-// Подключаем стили для скролл бара
-@import "scrollbar";
+// Подключаем общие стили для всего проекта
+@import "./components/config";
 
-// Подключаем tooltips
-@import "tooltips";
-// ==================================================
+// Подключаем стили для скролла
+@import "./components/scrollbar";
 
-// Ваш main scss код:
+// Подключаем контейнер
+@import "./components/container";
+
+// main scss код:
 body {
-  background-color: $base-color;
+  font-family: var(--main-font);
+  font-weight: 400;
+  font-style: normal;
+  font-size: 13px;
+  height: 10001px;
 }

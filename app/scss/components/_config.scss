@@ -1,0 +1,97 @@
+/* Общие стили */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+
+  // Fix размытия изображений в chromium
+  image-rendering: -webkit-optimize-contrast;
+
+  // Сглаживание шрифтов
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+
+  // Outline по умолчанию выключен
+  // outline: none;
+}
+
+html {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+// Вытягиваем все картинки по ширине и убираем отступ
+img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+// Убираем отступ svg
+svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+// reset списков
+ul,
+ol {
+  list-style-type: none;
+  margin: 0;
+  padding-left: 0;
+}
+
+// reset h, p
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+// button
+button {
+  cursor: pointer;
+  display: block;
+  padding: 0;
+  background-color: transparent;
+  color: inherit;
+  border: 1px solid #000;
+}
+
+// input, textarea
+input,
+textarea {
+  display: block;
+  padding: 0;
+  background-color: transparent;
+  color: inherit;
+  caret-color: inherit;
+  border: 1px solid #000;
+  &::placeholder {
+    color: inherit;
+    opacity: 0.5;
+  }
+}
+
+// link
+a {
+  cursor: pointer;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  &:visited {
+    color: blue;
+  }
+}
+
+// Настройки body
+body {
+  min-width: 320px;
+  position: relative;
+}

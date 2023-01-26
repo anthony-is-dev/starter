@@ -1,0 +1,25 @@
+// Стилизация скролла для Mozilla Firefox
+*,
+*::before,
+*::after {
+  scrollbar-color: #5f9ea0 #000; /* «цвет ползунка» «цвет полосы скроллбара» */
+  scrollbar-width: thin; /* толщина */ // (варианты: auto | thin | none;)
+}
+
+// Стилизация скролла для webkit браузеров
+
+/* полоса прокрутки (скроллбар) */
+::-webkit-scrollbar {
+  width: 8px; /* ширина для вертикального скролла */
+  height: 8px; /* высота для горизонтального скролла */
+  background-color: #000;
+}
+
+/* ползунок скроллбара */
+::-webkit-scrollbar-thumb {
+  background-color: #5f9ea0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #3f5f5f;
+}

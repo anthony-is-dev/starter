@@ -1,176 +1,217 @@
-import gulp from "gulp";
-import compileSass from "sass";
-import gulpSass from "gulp-sass";
+// рекомендуемые версии:
+// npm версия - 8.12.2
+// nodejs версия - 14.19.1
+
+// старт => gulp
+// создать билд => gulp runBuild
+
+import gulp from 'gulp';
+import gulpSass from 'gulp-sass';
+import compileSass from 'sass';
 const sass = gulpSass(compileSass);
-import autoprefixer from "gulp-autoprefixer";
-import concat from "gulp-concat";
-import browserSync from "browser-sync";
-import babel from "gulp-babel";
-import minify from "gulp-terser";
-import imagemin, { gifsicle, mozjpeg, optipng, svgo } from "gulp-imagemin";
-import del from "del";
-import fileinclude from "gulp-file-include";
-import sourcemaps from "gulp-sourcemaps";
-import webpack from "webpack";
-import webpackStream from "webpack-stream";
-import clean from "gulp-clean-css";
+import gulpAutoprefixer from 'gulp-autoprefixer';
+import gulpConcat from 'gulp-concat';
+import browserSync from 'browser-sync';
+import gulpHtmlMin from 'gulp-htmlmin';
+import gulpImageMin, { gifsicle, mozjpeg, optipng, svgo } from 'gulp-imagemin';
+import gulpFileInclude from 'gulp-file-include';
+import gulpCleanCss from 'gulp-clean-css';
+import gulpSourcemaps from 'gulp-sourcemaps';
+import { deleteAsync } from 'del';
+import webpack from 'webpack';
+import gulpWebpack from 'webpack-stream';
 
 // server
 export const startServer = () => {
   browserSync.init({
     server: {
-      baseDir: "app",
+      baseDir: './app',
     },
+    notify: false,
   });
-  compileInclude();
-  sassToCss();
-  scriptsDev();
-};
-
-// compile include HTML
-export const compileInclude = () => {
-  return gulp
-    .src("app/html/*.html") // Следим за всеми html в папке "html" (именно в них прописан include)
-    .pipe(
-      fileinclude({
-        prefix: "@@",
-        basepath: "@file",
-      })
-    )
-    .pipe(gulp.dest("app")) // результат компиляции выкладываем в app
-    .pipe(browserSync.stream());
 };
 
 // compile sass to css
 export const sassToCss = () => {
   return gulp
-    .src("app/scss/main.scss")
-    .pipe(sourcemaps.init({ loadMaps: true, largeFile: true }))
-    .pipe(sass({ outputStyle: "compressed" }))
+    .src('app/scss/main.scss')
+    .pipe(gulpSourcemaps.init({ loadMaps: true, largeFile: true }))
+    .pipe(sass({ outputStyle: 'compressed' }))
     .pipe(
-      autoprefixer({
-        overrideBrowserslist: ["last 20 versions"],
-        grid: "autoplace",
+      gulpAutoprefixer({
+        overrideBrowserslist: ['last 50 versions'],
+        grid: 'autoplace',
       })
     )
-    .pipe(concat("main.min.css"))
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest("app/css"))
+    .pipe(gulpConcat('main.min.css'))
+    .pipe(gulpSourcemaps.write())
+    .pipe(gulp.dest('app/css'))
     .pipe(browserSync.stream());
 };
 
-// Скрипты для dev
+// compile include HTML
+export const compileInclude = () => {
+  return gulp
+    .src('app/html/*.html') // Следим за всеми html в папке "html" (именно в них прописан include)
+    .pipe(
+      gulpFileInclude({
+        prefix: '@@',
+        basepath: '@file',
+      })
+    )
+    .pipe(gulp.dest('app')) // результат компиляции выкладываем в app
+    .pipe(browserSync.stream());
+};
+
+// Скрипты для development
 export const scriptsDev = () => {
   return gulp
-    .src("app/js/main.js")
+    .src('app/js/main.js')
     .pipe(
-      webpackStream({
-        mode: "none",
-        plugins: [
-          new webpack.ProvidePlugin({
-            $: "jquery",
-            jQuery: "jquery",
-          }),
-        ],
-        devtool: "eval-source-map",
-      })
+      gulpWebpack(
+        {
+          mode: 'development',
+          devtool: 'eval-source-map',
+          module: {
+            rules: [
+              {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                  loader: 'babel-loader',
+                  options: {
+                    presets: ['@babel/preset-env'],
+                    // cacheDirectory: true,
+                    // cacheCompression: false,
+                  },
+                },
+              },
+            ],
+          },
+          output: {
+            environment: {
+              arrowFunction: false,
+            },
+          },
+        },
+        webpack
+      )
     )
-    .pipe(babel())
-    .pipe(minify())
-    .pipe(concat("main.min.js"))
-    .pipe(gulp.dest("app/js"))
+    .pipe(gulpConcat('main.min.js'))
+    .pipe(gulp.dest('app/js'))
     .pipe(browserSync.stream());
 };
 
-// Скрипты для prod
+// Скрипты для production
 export const scriptsProd = () => {
   return gulp
-    .src("app/js/main.js")
+    .src('app/js/main.js')
     .pipe(
-      webpackStream({
-        mode: "none",
-        plugins: [
-          new webpack.ProvidePlugin({
-            $: "jquery",
-            jQuery: "jquery",
-          }),
-        ],
-      })
+      gulpWebpack(
+        {
+          mode: 'production',
+          devtool: false,
+          module: {
+            rules: [
+              {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                  loader: 'babel-loader',
+                  options: {
+                    presets: ['@babel/preset-env'],
+                    // cacheDirectory: true,
+                    // cacheCompression: false,
+                  },
+                },
+              },
+            ],
+          },
+          output: {
+            environment: {
+              arrowFunction: false,
+            },
+          },
+        },
+        webpack
+      )
     )
-    .pipe(babel())
-    .pipe(minify())
-    .pipe(concat("main.min.js"))
-    .pipe(gulp.dest("dist/js"));
+    .pipe(gulpConcat('main.min.js'))
+    .pipe(gulp.dest('dist/js'));
 };
 
 // watching
 export const watching = () => {
-  gulp.watch(["app/scss/**/*.scss"], sassToCss);
-  gulp.watch(["app/html/**/*.html"], compileInclude);
-  gulp.watch(["app/js/**/*.js", "!app/js/main.min.js"], scriptsDev);
-  gulp.watch(["app/**/*.html"]).on("change", browserSync.reload);
+  gulp.watch(['app/scss/main.scss', 'app/scss/components/*.scss'], sassToCss);
+  gulp.watch(['app/html/*.html', 'app/html/include/*.html'], compileInclude);
+  gulp.watch(['app/js/main.js', 'app/js/components/*.js'], scriptsDev);
 };
 
-// delite dist
+// clean dist
 export const cleanDist = () => {
-  return del("dist");
+  return deleteAsync('dist');
 };
 
-// images minify
-export const images = () => {
+// minify images
+export const minifyImages = () => {
   return gulp
-    .src("app/images/**/*")
+    .src('app/images/**/*')
     .pipe(
-      imagemin([
+      gulpImageMin([
         gifsicle({ interlaced: true }),
         mozjpeg({ quality: 75, progressive: true }),
         optipng({ optimizationLevel: 5 }),
         svgo({
           plugins: [
             {
-              name: "removeViewBox",
+              name: 'removeViewBox',
               active: true,
             },
             {
-              name: "cleanupIDs",
+              name: 'cleanupIDs',
               active: false,
             },
           ],
         }),
       ])
     )
-    .pipe(gulp.dest("dist/images"));
+    .pipe(gulp.dest('dist/images'));
 };
 
 // сlear css comments
 export const clearCssComments = () => {
   return gulp
-    .src("dist/css/*.css")
+    .src('dist/css/main.min.css')
     .pipe(
-      clean({
+      gulpCleanCss({
         level: 2,
       })
     )
-    .pipe(gulp.dest("dist/css"));
+    .pipe(gulp.dest('dist/css'));
+};
+
+// minify HTML
+export const minifyHtml = () => {
+  return gulp
+    .src('dist/*.html')
+    .pipe(
+      gulpHtmlMin({
+        collapseWhitespace: true,
+        removeComments: true,
+        minifyCSS: true,
+        minifyJS: true,
+      })
+    )
+    .pipe(gulp.dest('dist'));
 };
 
 // build
 export const build = () => {
-  return gulp
-    .src(["app/css/main.min.css", "app/fonts/**/*", "app/*.html"], {
-      base: "app",
-    })
-    .pipe(gulp.dest("dist"));
+  return gulp.src(['app/css/main.min.css', 'app/fonts/**/*', 'app/*.html'], { base: './app' }).pipe(gulp.dest('dist'));
 };
 
 // start build creation
-export const runBuild = gulp.series(
-  cleanDist,
-  build,
-  images,
-  clearCssComments,
-  scriptsProd
-);
+export const runBuild = gulp.series(cleanDist, build, minifyImages, clearCssComments, minifyHtml, scriptsProd);
 
 // gulp default
 export default gulp.parallel(startServer, watching);
