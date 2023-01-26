@@ -9,5 +9,6 @@ gulp + webpack
 * gulp-sourcemaps
 * webpack-stream
 
-## start project => gulp
-## create build => gulp runBuild
+## init:
+**start project:** gulp  
+**create build:** gulp runBuild
